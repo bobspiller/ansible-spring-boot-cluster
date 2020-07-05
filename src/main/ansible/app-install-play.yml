@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: ensure open JRE 11 is installed
+    yum: name=java-11-openjdk state=installed
+  - name: ensure demo group is present
+    group:
+      gid: 5000
+      name: demo
+      state: present
+  - name: ensure demo user is present
+    user:
+      uid: 5000
+      name: demo
+      group: demo
+      state: present
+  - name: ensure app install directory is present
+    file:
+      path: /opt/demo/
+      state: directory
+      mode: '0755'
+      owner: demo
+      group: demo
+  - name: ensure current demo application build is installed
+    copy:
+      src: ../../../target/ansible-spring-boot-cluster-1.0-SNAPSHOT.jar
+      dest: /opt/demo/
+      owner: demo
+      group: demo
+      mode: 0644
+

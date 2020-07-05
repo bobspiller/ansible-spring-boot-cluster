@@ -18,12 +18,11 @@ Vagrant.configure("2") do |config|
         app.vm.hostname = machine[:hostname]
         app.vm.network "private_network", ip: machine[:ip]
         app.vm.provision :shell, inline: "/usr/bin/hostname && /usr/sbin/ip addr"
-        puts "hostname = #{machine[:hostname]}"
         if machine[:hostname] == "app2.vm"
           app.vm.provision :ansible do |ansible|
             # Disable default limit to connect to all the machines
             ansible.limit = "all"
-            ansible.playbook = "src/main/ansible/ntp-play.yml"
+            ansible.playbook = "src/main/ansible/app-install-play.yml"
           end
         end
       end
