@@ -1,0 +1,12 @@
+# IntelliJ debris
+.idea
+*.iml
+
+# Vim debris
+.*.swp
+
+# Maven build artifacts
+target
+
+# Vagrant artifacts
+.vagrant
