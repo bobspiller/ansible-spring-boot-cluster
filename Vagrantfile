@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
           app.vm.provision :ansible do |ansible|
             # Disable default limit to connect to all the machines
             ansible.limit = "all"
-            ansible.playbook = "src/main/ansible/app-install-play.yml"
+            ansible.playbook = "target/playbooks/app-install-play.yml"
           end
         end
       end

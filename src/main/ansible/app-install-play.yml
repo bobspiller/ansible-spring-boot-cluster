@@ -1,6 +1,8 @@
 ---
 - hosts: all
   become: yes
+  vars:
+    artifact_source_path: @project.build.directory@/@project.build.finalName@.jar
   tasks:
   - name: ensure open JRE 11 is installed
     yum: name=java-11-openjdk state=installed
@@ -24,7 +26,7 @@
       group: demo
   - name: ensure current demo application build is installed
     copy:
-      src: ../../../target/ansible-spring-boot-cluster-1.0-SNAPSHOT.jar
+      src: "{{ artifact_source_path }}"
       dest: /opt/demo/
       owner: demo
       group: demo
