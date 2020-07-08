@@ -2,7 +2,9 @@
 - hosts: all
   become: yes
   vars:
-    artifact_source_path: @project.build.directory@/@project.build.finalName@.jar
+    artifact_source: "@project.build.directory@/@project.build.finalName@.jar"
+    artifact_dest_path: "/opt/demo"
+    artifact_target_name: "@project.artifactId@.jar"
   tasks:
   - name: ensure open JRE 11 is installed
     yum: name=java-11-openjdk state=installed
@@ -19,16 +21,38 @@
       state: present
   - name: ensure app install directory is present
     file:
-      path: /opt/demo/
+      path: "{{ artifact_dest_path }}"
+      state: directory
+      mode: '0755'
+      owner: demo
+      group: demo
+  - name: ensure app log directory is present
+    file:
+      path: /var/log/demo/
       state: directory
       mode: '0755'
       owner: demo
       group: demo
   - name: ensure current demo application build is installed
     copy:
-      src: "{{ artifact_source_path }}"
-      dest: /opt/demo/
+      src: "{{ artifact_source }}"
+      dest: "{{ artifact_dest_path }}/{{ artifact_target_name }}"
       owner: demo
       group: demo
       mode: 0644
-
+  - name: ensure demo application configuration is installed
+    copy:
+      src: application.properties
+      dest: "{{ artifact_dest_path }}"
+      owner: demo
+      group: demo
+      mode: 0644
+  - name: ensure demo service unit file is installed
+    template:
+      src: demo.service
+      dest: "/etc/systemd/system"
+      mode: 0644
+  - name: Make sure the demo service is running
+    systemd:
+      state: started
+      name: demo

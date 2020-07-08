@@ -15,6 +15,11 @@ Vagrant.configure("2") do |config|
     machines.each do |machine|
       config.vm.define machine[:hostname] do |app|
         app.vm.box = "centos/7"
+        app.vm.provider "virtualbox" do |v|
+          v.memory = 512
+          v.cpus = 1
+          v.linked_clone = true
+        end
         app.vm.hostname = machine[:hostname]
         app.vm.network "private_network", ip: machine[:ip]
         app.vm.provision :shell, inline: "/usr/bin/hostname && /usr/sbin/ip addr"
