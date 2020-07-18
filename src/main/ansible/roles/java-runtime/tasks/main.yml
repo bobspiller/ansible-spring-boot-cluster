@@ -1,0 +1,8 @@
+---
+- name: announce javahost role
+  debug: 
+    msg: "entering javahost role"
+- name: ensure open JRE 11 is installed
+  yum:
+    name: java-11-openjdk
+    state: installed
