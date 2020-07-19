@@ -1,11 +1,12 @@
 ---
-- hosts: all
+- hosts: demoapp
   become: yes
   vars:
     artifact_source: "@project.build.directory@/@project.build.finalName@.jar"
     artifact_dest_path: "/opt/demo"
     artifact_target_name: "@project.artifactId@.jar"
   roles:
+  - linux-server
   - java-runtime
   tasks:
   - name: interrogate the os family for each host

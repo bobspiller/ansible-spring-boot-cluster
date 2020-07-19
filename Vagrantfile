@@ -3,12 +3,16 @@ Vagrant.configure("2") do |config|
 
     machines = [
         {
+          :hostname => "lb.vm",
+          :ip => "10.250.0.10"
+        },
+        {
             :hostname => "app1.vm",
-            :ip => "10.250.0.2"
+            :ip => "10.250.0.100"
         },
         {
             :hostname => "app2.vm",
-            :ip => "10.250.0.3"
+            :ip => "10.250.0.101"
         }
     ]
   
@@ -27,7 +31,12 @@ Vagrant.configure("2") do |config|
           app.vm.provision :ansible do |ansible|
             # Disable default limit to connect to all the machines
             ansible.limit = "all"
-            ansible.playbook = "target/playbooks/app-install-play.yml"
+            # ansible.verbose = "-v"
+            ansible.groups = {
+              "loadbalancer" => ["lb.vm"],
+              "demoapp" => ["app1.vm","app2.vm"]
+            }
+            ansible.playbook = "target/playbooks/main-play.yml"
           end
         end
       end

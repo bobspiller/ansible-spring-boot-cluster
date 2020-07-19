@@ -1,0 +1,3 @@
+---
+- import_playbook: "lb-install-play.yml"
+- import_playbook: "app-install-play.yml"
