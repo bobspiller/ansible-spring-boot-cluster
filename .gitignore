@@ -10,3 +10,6 @@ target
 
 # Vagrant artifacts
 .vagrant
+
+# MacOS finder depris
+.DS_Store

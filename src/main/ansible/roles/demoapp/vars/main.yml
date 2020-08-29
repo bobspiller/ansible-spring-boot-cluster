@@ -1,0 +1,4 @@
+---
+artifact_source: "@project.build.directory@/@project.build.finalName@.jar"
+artifact_dest_path: "/opt/demo"
+artifact_target_name: "@project.artifactId@.jar"
