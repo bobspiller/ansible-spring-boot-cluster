@@ -3,4 +3,4 @@
   become: yes
   roles:
   - linux-server
-  - haproxy-loadbalancer
+  - nginx-loadbalancer
