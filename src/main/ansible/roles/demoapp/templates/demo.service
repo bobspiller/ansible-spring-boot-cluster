@@ -5,7 +5,7 @@ After=syslog.target
 [Service]
 User=demo
 Group=demo
-ExecStart=/usr/bin/java -jar {{ artifact_dest_path }}/{{ artifact_target_name }}
+ExecStart={{ artifact_dest_path }}/{{ startup_script_name }}
 SuccessExitStatus=143
 
 [Install]

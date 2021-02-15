@@ -41,6 +41,13 @@
     owner: demo
     group: demo
     mode: '0644'
+- name: ensure demo application startup script is installed
+  template:
+    src: "{{ startup_script_name }}"
+    dest: "{{ artifact_dest_path }}"
+    owner: demo
+    group: demo
+    mode: '0755'
 - name: ensure demo service unit file is installed
   template:
     src: demo.service

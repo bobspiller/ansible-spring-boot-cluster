@@ -11,5 +11,8 @@ target
 # Vagrant artifacts
 .vagrant
 
+# Spring boot local configuration
+config
+
 # MacOS finder depris
 .DS_Store
