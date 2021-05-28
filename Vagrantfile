@@ -27,6 +27,9 @@ Vagrant.configure("2") do |config|
         app.vm.hostname = machine[:hostname]
         app.vm.network "private_network", ip: machine[:ip]
         app.vm.provision :shell, inline: "/usr/bin/hostname && /usr/sbin/ip addr"
+        if machine[:hostname] == "lb.vm"
+            app.vm.network "forwarded_port", guest: 80, host: 8080
+        end
         if machine[:hostname] == "app2.vm"
           app.vm.provision :ansible do |ansible|
             # Disable default limit to connect to all the machines
